@@ -36,7 +36,7 @@ public class Marshmallow : MonoBehaviour {
 
 
 	void OnTriggerEnter(Collider other) {
-//		Debug.Log ("Collider enter");
+		Debug.Log ("Collider enter");
 		if (isAlive) {
 			if (other.gameObject.tag == "Projectile") {
 				Debug.Log ("Die");
