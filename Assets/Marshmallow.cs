@@ -30,9 +30,20 @@ public class Marshmallow : MonoBehaviour {
 	
 	}
 
-//	void OnCollisionEnter(Collision collision) {
-//		Debug.Log ("Collision enter");
-//	}
+	void OnCollisionEnter(Collision collision) {
+		Debug.Log ("Collision enter");
+		Debug.Log ("Collider enter");
+		if (isAlive) {
+			if (collision.gameObject.tag == "Projectile") {
+				Debug.Log ("Die");
+				Die ();
+			} else {
+				Debug.Log ("Mug hit");
+			}
+		
+//			SoundManager.Instance.PlayOneShot(SoundManager.Instance.alienDeath);
+		}
+	}
 
 
 	void OnTriggerEnter(Collider other) {

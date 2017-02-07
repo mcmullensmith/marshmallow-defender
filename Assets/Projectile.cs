@@ -33,7 +33,18 @@ public class Projectile : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
+		// print("projectile collision");
 		Destroy(gameObject);
+	}
+
+	/// <summary>
+	/// OnTriggerEnter is called when the Collider other enters the trigger.
+	/// </summary>
+	/// <param name="other">The other Collider involved in this collision.</param>
+	void OnTriggerEnter(Collider other)
+	{
+			// print("projectile collision");
+			Destroy(gameObject);
 	}
 
 
