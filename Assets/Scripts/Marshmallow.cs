@@ -6,12 +6,14 @@ public class Marshmallow : MonoBehaviour {
 	public bool isAlive = true;
 	public GameObject explosion;
 
-	private AudioSource audioSource;
+	public int scorePerHit = 1;
+	public int damagePerPlayerHit = 20;
+
+	public int damagePerCocoaHit = 10;
 
 	public float verticalForce = 150f;
 	// Use this for initialization
 	void Start () {
-		audioSource = GetComponent<AudioSource>();
 		Rigidbody rigidBody = GetComponent<Rigidbody> ();
 		rigidBody.AddForce (new Vector3 (
 			0, 
@@ -28,7 +30,6 @@ public class Marshmallow : MonoBehaviour {
 
 	void Explode() {
         Instantiate(explosion, transform.position, transform.rotation);
-		// audioSource.PlayOneShot(SoundManager.Instance.marshmallowExplosion);
 		SoundManager.Instance.PlayOneShot(SoundManager.Instance.marshmallowExplosion);
     }
 	
@@ -38,31 +39,27 @@ public class Marshmallow : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
-		// Debug.Log ("Collision enter");
-		// Debug.Log ("Collider enter");
 		if (isAlive) {
 			if (collision.gameObject.tag == "Projectile") {
 				Debug.Log ("Die");
+				ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+				scoreKeeper.IncrementScore(scorePerHit);
 				Die ();
-			} else {
+			} 
 
-			}
-
-		}
-	}
-
-
-	void OnTriggerEnter(Collider other) {
-		Debug.Log ("Collider enter");
-		if (isAlive) {
-			if (other.gameObject.tag == "Projectile") {
+			if (collision.gameObject.tag == "Player") {
 				Debug.Log ("Die");
+				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
+				damageKeeper.IncrementDamage(damagePerPlayerHit);
 				Die ();
-			} else {
-				Debug.Log ("Die");
-				Die ();
-			}
-	
+			} 
+
+			if (collision.gameObject.tag == "Cocoa") {
+				isAlive = false;
+				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
+				damageKeeper.IncrementDamage(damagePerCocoaHit);
+			} 
+
 		}
 	}
 
