@@ -6,14 +6,17 @@ public class Marshmallow : MonoBehaviour {
 	public bool isAlive = true;
 	public GameObject explosion;
 
-	public int scorePerHit = 1;
+	public int scorePerHit = 50;
 	public int damagePerPlayerHit = 20;
 
 	public int damagePerCocoaHit = 10;
 
-	public float verticalForce = 150f;
+	MarshMallowEmitter marshmallowEmitter;
+
+	public float verticalForce = 200f;
 	// Use this for initialization
 	void Start () {
+		marshmallowEmitter = FindObjectOfType<MarshMallowEmitter>();
 		Rigidbody rigidBody = GetComponent<Rigidbody> ();
 		rigidBody.AddForce (new Vector3 (
 			0, 
@@ -35,29 +38,39 @@ public class Marshmallow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 
 	void OnCollisionEnter(Collision collision) {
 		if (isAlive) {
 			if (collision.gameObject.tag == "Projectile") {
-				Debug.Log ("Die");
 				ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
 				scoreKeeper.IncrementScore(scorePerHit);
 				Die ();
+				marshmallowEmitter.marshmallowHits++;
+				
 			} 
 
 			if (collision.gameObject.tag == "Player") {
-				Debug.Log ("Die");
 				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
 				damageKeeper.IncrementDamage(damagePerPlayerHit);
 				Die ();
+				marshmallowEmitter.marshmallowHits++;
+			
 			} 
 
 			if (collision.gameObject.tag == "Cocoa") {
 				isAlive = false;
 				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
 				damageKeeper.IncrementDamage(damagePerCocoaHit);
+				marshmallowEmitter.marshmallowHits++;
+				
+			} 
+
+			if (collision.gameObject.tag == "OutOfBounds") {
+				Destroy(gameObject);
+				marshmallowEmitter.marshmallowHits++;
+			
 			} 
 
 		}
