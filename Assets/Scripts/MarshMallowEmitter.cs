@@ -36,6 +36,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 		spawnTimer = spawnDuration;
 		damageKeeper = FindObjectOfType<DamageKeeper>();
 		coroutine = LevelLoader();
+		StartCoroutine(coroutine);
 	}
 	
 	// Update is called once per frame
@@ -47,40 +48,46 @@ public class MarshMallowEmitter : MonoBehaviour {
 			SceneManager.LoadScene("GameOver");
 		}
 
-		
-		GenerateMarshmallows();
+		print("marshmallow hits: " + marshmallowHits);
+		print("max marshmallows: " + maxMarshmallows);
 
 	}
 
 	private IEnumerator LevelLoader() {
+	
+		spawnTimer -= Time.deltaTime;
+		
+		if(maxLoops != 0) {
+
+			for ( int i = 0; i< marshmallows.Length; i++ ) {
+				SpawnMarshmallows();
+			}
+			maxLoops--;
+
+			yield return new WaitForSeconds (2f);
+			
+			StartCoroutine(LevelLoader());
+
+		}
 
 		
+		
 		yield return new WaitForSeconds (10f);
+		
 
-	}
-
-	void GenerateMarshmallows() {
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
+
 			maxMarshmallows += 3;
 		 	level++;
 		 	marshmallowHits = 0;
 			maxLoops = BASE_LOOP + level;
 			damageKeeper.damage = 100;
-		} else {
-			StopCoroutine(coroutine);
-		}
-		
-		spawnTimer -= Time.deltaTime;
-		if(maxLoops != 0) {
-			if ( spawnTimer <= 0f ) {
-				spawnTimer = spawnDuration;
-				for ( int i = 0; i< marshmallows.Length; i++ ) {
-					SpawnMarshmallows();
-				}
-				maxLoops--;
-			}
-		}
-		
+
+			StartCoroutine(LevelLoader());
+			
+		} 
+
+
 	}
 
 	void SpawnMarshmallows() {
