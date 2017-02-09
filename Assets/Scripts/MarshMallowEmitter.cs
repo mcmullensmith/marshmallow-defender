@@ -96,7 +96,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 				marshmallow.transform.position = new Vector3 (
 					Random.Range (-horizontalArea, horizontalArea),
 					100.0f,
-					Random.Range (-horizontalArea, horizontalArea)
+					Random.Range (-20, 20)
 				);
 	}
 }
