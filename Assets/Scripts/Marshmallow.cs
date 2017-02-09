@@ -64,7 +64,7 @@ public class Marshmallow : MonoBehaviour {
 				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
 				damageKeeper.IncrementDamage(damagePerCocoaHit);
 				marshmallowEmitter.marshmallowHits++;
-				
+				SoundManager.Instance.PlayOneShot(SoundManager.Instance.splash);
 			} 
 
 			if (collision.gameObject.tag == "OutOfBounds") {
@@ -72,6 +72,10 @@ public class Marshmallow : MonoBehaviour {
 				marshmallowEmitter.marshmallowHits++;
 			
 			} 
+
+			if (collision.gameObject.tag == "Mug") {
+				SoundManager.Instance.PlayOneShot(SoundManager.Instance.mugHit);
+			}
 
 		}
 	}
