@@ -5,13 +5,13 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
 
 	public static SoundManager Instance = null;
-	private AudioSource soundEffectAudio;
+	private GvrAudioSource soundEffectAudio;
 
 	public AudioClip gunFire;
 	public AudioClip marshmallowExplosion;
-	public AudioClip hurt;
+	public AudioClip mugHit;
 	public AudioClip playerDeath;
-	public AudioClip victory;
+	public AudioClip splash;
 
 
 	// Use this for initialization
@@ -22,9 +22,9 @@ public class SoundManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		AudioSource[] sources = GetComponents<AudioSource>();
+		GvrAudioSource[] sources = GetComponents<GvrAudioSource>();
 		
-		foreach (AudioSource source in sources) {
+		foreach (GvrAudioSource source in sources) {
 			if (source.clip == null) {
 				soundEffectAudio = source;
 			}
