@@ -77,6 +77,12 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
 
+			GameObject[] clones = GameObject.FindGameObjectsWithTag("Marshmallow");
+			
+			foreach(var clone in clones) {
+				Destroy(clone);
+			}
+			
 			maxMarshmallows += 3;
 		 	level++;
 		 	marshmallowHits = 0;
