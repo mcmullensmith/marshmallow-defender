@@ -11,8 +11,8 @@ public class HUDRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Camera camera = transform.parent.GetComponentInChildren<Camera>();
-		var projectedLookDirection = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up);
-		transform.rotation = Quaternion.LookRotation(projectedLookDirection);
+		var camera = transform.parent.GetComponent<Camera>();
+        var projectedLookDirection = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up);
+        transform.rotation = Quaternion.LookRotation(projectedLookDirection);
 	}
 }
