@@ -29,11 +29,15 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	DamageKeeper damageKeeper;
 
+	ScoreKeeper scoreKeeper;
+
 	private IEnumerator coroutine;
 
 	GameObject levelUI;
 
 	GameObject gameUI;
+
+	GameObject gameOverUI;
 
 	Timer timer;
 
@@ -42,9 +46,17 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		timer = FindObjectOfType<Timer>();
 		spawnTimer = spawnDuration;
+
 		damageKeeper = FindObjectOfType<DamageKeeper>();
+		damageKeeper.damage = 100;
+
+		scoreKeeper = FindObjectOfType<ScoreKeeper>();
+
+		scoreKeeper.score = 0;
+
 		coroutine = LevelLoader();
 		StartCoroutine(coroutine);
 
@@ -52,6 +64,10 @@ public class MarshMallowEmitter : MonoBehaviour {
 		levelUI.SetActive(false);
 
 		gameUI = GameObject.FindGameObjectWithTag("GameUI");
+
+		gameOverUI = GameObject.FindGameObjectWithTag("GameOverUI");
+		gameOverUI.SetActive(false);
+
 	}
 	
 	// Update is called once per frame
@@ -59,20 +75,17 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		if (damageKeeper.damage == 0) {
 			isGameOver = true;
-			print("Game Over");
-			SceneManager.LoadScene("GameOver");
+			gameOverUI.SetActive(true);
 		}
 
-		// print("marshmallow hits: " + marshmallowHits);
-		// print("max marshmallows: " + maxMarshmallows);
+		print("marshmallow hits: " + marshmallowHits);
+		print("max marshmallows: " + maxMarshmallows);
 
 	}
 
 	private IEnumerator LevelLoader() {
 	
-		spawnTimer -= Time.deltaTime;
-
-		
+		spawnTimer -= Time.deltaTime;		
 		
 		if(maxLoops != 0) {
 
@@ -87,11 +100,11 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		}
 		
-		yield return new WaitForSeconds (5f);
+		yield return new WaitForSeconds (10f);
 		
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
-			print("did this run twice?");
+			print("FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			levelComplete = true;
 			yield return StartCoroutine( ShowMessage() );
 			
@@ -103,8 +116,10 @@ public class MarshMallowEmitter : MonoBehaviour {
 	private IEnumerator ShowMessage () {
 
 			if(levelComplete) {
+
 				print("level complete: " + levelComplete);
 				ResetLevel();
+			
 				levelUI.SetActive(true);
 				gameUI.SetActive(false);
 
@@ -112,7 +127,9 @@ public class MarshMallowEmitter : MonoBehaviour {
 			
 				levelUI.SetActive(false);
 				gameUI.SetActive(true);
+
 				marshmallowsDestroyed = 0;
+			
 				StartCoroutine(LevelLoader());
 
 				
@@ -146,7 +163,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 				marshmallow.transform.position = new Vector3 (
 					Random.Range (-horizontalArea, horizontalArea),
 					100.0f,
-					Random.Range (-20, 20)
+					Random.Range (-horizontalArea, horizontalArea)
 				);
 	}
 }
