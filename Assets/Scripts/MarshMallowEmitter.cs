@@ -10,6 +10,8 @@ public class MarshMallowEmitter : MonoBehaviour {
 	//total collisions of marshmallows whether projectile, ground hit or destroyed outside mug
 	public int marshmallowHits = 0;
 
+	public int marshmallowsDestroyed = 0;
+
 	public int level = 1;
 
 	//max marshmallows per level
@@ -29,14 +31,27 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	private IEnumerator coroutine;
 
+	GameObject levelUI;
+
+	GameObject gameUI;
+
+	Timer timer;
+
+	private bool levelComplete = false;
+
 
 	// Use this for initialization
 	void Start () {
-		
+		timer = FindObjectOfType<Timer>();
 		spawnTimer = spawnDuration;
 		damageKeeper = FindObjectOfType<DamageKeeper>();
 		coroutine = LevelLoader();
 		StartCoroutine(coroutine);
+
+		levelUI = GameObject.FindGameObjectWithTag("LevelUI");
+		levelUI.SetActive(false);
+
+		gameUI = GameObject.FindGameObjectWithTag("GameUI");
 	}
 	
 	// Update is called once per frame
@@ -48,14 +63,16 @@ public class MarshMallowEmitter : MonoBehaviour {
 			SceneManager.LoadScene("GameOver");
 		}
 
-		print("marshmallow hits: " + marshmallowHits);
-		print("max marshmallows: " + maxMarshmallows);
+		// print("marshmallow hits: " + marshmallowHits);
+		// print("max marshmallows: " + maxMarshmallows);
 
 	}
 
 	private IEnumerator LevelLoader() {
 	
 		spawnTimer -= Time.deltaTime;
+
+		
 		
 		if(maxLoops != 0) {
 
@@ -69,32 +86,59 @@ public class MarshMallowEmitter : MonoBehaviour {
 			StartCoroutine(LevelLoader());
 
 		}
-
 		
-		
-		yield return new WaitForSeconds (10f);
+		yield return new WaitForSeconds (5f);
 		
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
-
-			GameObject[] clones = GameObject.FindGameObjectsWithTag("Marshmallow");
-			
-			foreach(var clone in clones) {
-				Destroy(clone);
-			}
-			
-			maxMarshmallows += 3;
-		 	level++;
-		 	marshmallowHits = 0;
-			maxLoops = BASE_LOOP + level;
-			damageKeeper.damage = 100;
-
-			StartCoroutine(LevelLoader());
+			print("did this run twice?");
+			levelComplete = true;
+			yield return StartCoroutine( ShowMessage() );
 			
 		} 
 
 
 	}
+
+	private IEnumerator ShowMessage () {
+
+			if(levelComplete) {
+				print("level complete: " + levelComplete);
+				ResetLevel();
+				levelUI.SetActive(true);
+				gameUI.SetActive(false);
+
+				yield return new WaitForSeconds(10f);
+			
+				levelUI.SetActive(false);
+				gameUI.SetActive(true);
+				marshmallowsDestroyed = 0;
+				StartCoroutine(LevelLoader());
+
+				
+			}
+			
+		
+ 	}
+
+	private void ResetLevel() {
+		print("reset level called: " + level);
+		levelComplete = false;
+
+		timer.timer = 10;
+
+		GameObject[] clones = GameObject.FindGameObjectsWithTag("Marshmallow");
+			
+		foreach(var clone in clones) {
+			Destroy(clone);
+		}
+
+		maxMarshmallows += 3;
+		level++;
+		marshmallowHits = 0;
+		maxLoops = BASE_LOOP + level;
+		damageKeeper.damage = 100;
+		}
 
 	void SpawnMarshmallows() {
 
