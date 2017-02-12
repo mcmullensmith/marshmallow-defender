@@ -7,6 +7,8 @@ public class ScoreDisplay : MonoBehaviour {
 
 	ScoreKeeper scoreKeeper;
 
+	public string intro;
+
 	Text text;
 
 	// Use this for initialization
@@ -17,6 +19,6 @@ public class ScoreDisplay : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		text.text = "Score: " + scoreKeeper.score;
+		text.text = intro + " " + scoreKeeper.score;
 	}
 }
