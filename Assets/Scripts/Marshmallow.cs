@@ -48,6 +48,7 @@ public class Marshmallow : MonoBehaviour {
 				scoreKeeper.IncrementScore(scorePerHit);
 				Die ();
 				marshmallowEmitter.marshmallowHits++;
+				marshmallowEmitter.marshmallowsDestroyed++;
 				
 			} 
 
