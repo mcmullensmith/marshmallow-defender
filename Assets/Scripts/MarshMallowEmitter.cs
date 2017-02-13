@@ -31,6 +31,8 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	ScoreKeeper scoreKeeper;
 
+	BulletSpawner bulletSpawner;
+
 	private IEnumerator coroutine;
 
 	GameObject levelUI;
@@ -55,6 +57,8 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		scoreKeeper = FindObjectOfType<ScoreKeeper>();
 
+		bulletSpawner = FindObjectOfType<BulletSpawner>();
+
 		scoreKeeper.score = 0;
 
 		coroutine = LevelLoader();
@@ -76,6 +80,19 @@ public class MarshMallowEmitter : MonoBehaviour {
 		if (damageKeeper.damage == 0) {
 			isGameOver = true;
 			gameOverUI.SetActive(true);
+		}
+
+		//decrease shootingCooldown as levels progress
+		if (level > 3) {
+			bulletSpawner.shootingCooldown = 0.4f;
+		} else if (level > 6) {
+			bulletSpawner.shootingCooldown = 0.3f;
+		} else if (level > 9) {
+			bulletSpawner.shootingCooldown = 0.2f;
+		} else if (level > 12) {
+			bulletSpawner.shootingCooldown = 0.1f;
+		} else {
+			bulletSpawner.shootingCooldown = 0.5f;
 		}
 
 		print("marshmallow hits: " + marshmallowHits);
@@ -104,7 +121,6 @@ public class MarshMallowEmitter : MonoBehaviour {
 		
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
-			print("FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			levelComplete = true;
 			yield return StartCoroutine( ShowMessage() );
 			
