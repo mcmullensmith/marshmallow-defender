@@ -82,6 +82,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 			gameOverUI.SetActive(true);
 		}
 
+		//decrease shootingCooldown as levels progress
 		if (level > 3) {
 			bulletSpawner.shootingCooldown = 0.4f;
 		} else if (level > 6) {
@@ -120,7 +121,6 @@ public class MarshMallowEmitter : MonoBehaviour {
 		
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
-			print("FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			levelComplete = true;
 			yield return StartCoroutine( ShowMessage() );
 			
