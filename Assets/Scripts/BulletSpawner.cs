@@ -10,13 +10,20 @@ public class BulletSpawner : MonoBehaviour {
 	public float shootingCooldown = 0.5f;
 	private float shootingTimer = 0f;
 
+	MarshMallowEmitter marshmallowEmitter;
+
+
 	// Use this for initialization
 	void Start () {
-		
+		marshmallowEmitter = FindObjectOfType<MarshMallowEmitter>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if( marshmallowEmitter.isGameOver) {
+			return;
+		}
 
 		shootingTimer -= Time.deltaTime;
 	
