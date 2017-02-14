@@ -57,6 +57,7 @@ public class Marshmallow : MonoBehaviour {
 			if (collision.gameObject.tag == "Player") {
 				DamageKeeper damageKeeper = FindObjectOfType<DamageKeeper>();
 				damageKeeper.IncrementDamage(damagePerPlayerHit);
+				CameraShake.Shake(1, 1);
 				Die ();
 				marshmallowEmitter.marshmallowHits++;
 			
