@@ -18,5 +18,13 @@ public class DamageDisplay : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		text.text = "Damage : " + damageKeeper.damage;
+
+		if (damageKeeper.damage <= 70  && damageKeeper.damage > 40) {
+			text.color = Color.yellow;
+		} else if (damageKeeper.damage <= 40) {
+			text.color = Color.red;
+		} else {
+			text.color = Color.white;
+		}
 	}
 }
