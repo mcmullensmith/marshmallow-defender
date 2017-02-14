@@ -16,13 +16,14 @@ public class Marshmallow : MonoBehaviour {
 	MarshMallowEmitter marshmallowEmitter;
 
 	public float verticalForce = 200f;
+	private float minVerticalForce = 200f;
 	// Use this for initialization
 	void Start () {
 		marshmallowEmitter = FindObjectOfType<MarshMallowEmitter>();
 		Rigidbody rigidBody = GetComponent<Rigidbody> ();
 		rigidBody.AddForce (new Vector3 (
 			0, 
-			Random.Range(-verticalForce, verticalForce), 
+			Random.Range(-minVerticalForce, verticalForce), 
 			0
 		));
 	}
