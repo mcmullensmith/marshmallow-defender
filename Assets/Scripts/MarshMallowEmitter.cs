@@ -84,6 +84,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 		if (damageKeeper.damage == 0) {
 			isGameOver = true;
 			gameOverUI.SetActive(true);
+			gameUI.SetActive(false);
 			StopAllCoroutines();
 		}
 
