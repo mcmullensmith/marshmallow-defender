@@ -92,15 +92,18 @@ public class MarshMallowEmitter : MonoBehaviour {
 		if (level > 3) {
 			bulletSpawner.shootingCooldown = 0.4f;
 			marshmallow.verticalForce = 225;
+			horizontalArea = 10.5f;
 		} else if (level > 6) {
 			bulletSpawner.shootingCooldown = 0.3f;
 			marshmallow.verticalForce = 250;
+			horizontalArea = 11;
 		} else if (level > 9) {
 			bulletSpawner.shootingCooldown = 0.2f;
 			marshmallow.verticalForce = 275;
 		} else if (level > 12) {
 			bulletSpawner.shootingCooldown = 0.1f;
 			marshmallow.verticalForce = 300;
+			horizontalArea = 12;
 		} else {
 			bulletSpawner.shootingCooldown = 0.5f;
 		}
