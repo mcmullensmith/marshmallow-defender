@@ -11,6 +11,8 @@ public class Marshmallow : MonoBehaviour {
 
 	public int damagePerCocoaHit = 10;
 
+	private float delay = 3.0f;
+
 	MarshMallowEmitter marshmallowEmitter;
 
 	public float verticalForce = 200f;
@@ -80,5 +82,10 @@ public class Marshmallow : MonoBehaviour {
 
 		}
 	}
+
+	private IEnumerator WaitAndDestroy(){
+    	yield return new WaitForSeconds(delay);
+    	Destroy (gameObject);
+ 	}
 
 }
