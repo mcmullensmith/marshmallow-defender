@@ -21,7 +21,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	public float horizontalArea = 10.0f;
 
-	public float spawnDuration = 3.0f;
+	private float spawnDuration = 3.0f;
 
 	private float spawnTimer;
 
@@ -89,21 +89,28 @@ public class MarshMallowEmitter : MonoBehaviour {
 		}
 
 		//decrease shootingCooldown as levels progress
+		//increase marshmallow vertical force
+		//increase horizontal horizontalArea
+		//decrease spawn duration
 		if (level > 3) {
-			bulletSpawner.shootingCooldown = 0.4f;
 			marshmallow.verticalForce = 225;
-			horizontalArea = 10.5f;
+			horizontalArea = 10.25f;
+			spawnDuration = 2.75f;
 		} else if (level > 6) {
-			bulletSpawner.shootingCooldown = 0.3f;
+			bulletSpawner.shootingCooldown = 0.4f;
 			marshmallow.verticalForce = 250;
-			horizontalArea = 11;
+			horizontalArea = 10.5f;
+			spawnDuration = 2.5f;
 		} else if (level > 9) {
-			bulletSpawner.shootingCooldown = 0.2f;
-			marshmallow.verticalForce = 275;
-		} else if (level > 12) {
-			bulletSpawner.shootingCooldown = 0.1f;
+			bulletSpawner.shootingCooldown = 0.3f;
 			marshmallow.verticalForce = 300;
+			horizontalArea = 11f;
+			spawnDuration = 2.25f;
+		} else if (level > 12) {
+			bulletSpawner.shootingCooldown = 0.2f;
+			marshmallow.verticalForce = 350;
 			horizontalArea = 12;
+			spawnDuration = 2.0f;
 		} else {
 			bulletSpawner.shootingCooldown = 0.5f;
 		}
