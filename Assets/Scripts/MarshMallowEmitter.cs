@@ -161,18 +161,21 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 				yield return new WaitForSeconds(10f);
 			
-				levelUI.SetActive(false);
-				gameUI.SetActive(true);
-
-				marshmallowsDestroyed = 0;
-			
-				StartCoroutine(LevelLoader());
-
+				StartNextLevel();
 				
 			}
 			
 		
  	}
+
+	public void StartNextLevel() {
+		levelUI.SetActive(false);
+		gameUI.SetActive(true);
+
+		marshmallowsDestroyed = 0;
+	
+		StartCoroutine(LevelLoader());
+	}
 
 	private void ResetLevel() {
 		print("reset level called: " + level);
