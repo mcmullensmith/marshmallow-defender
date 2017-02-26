@@ -10,7 +10,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 	//total collisions of marshmallows whether projectile, ground hit or destroyed outside mug
 	public int marshmallowHits = 0;
 
-	public int marshmallowsDestroyed = 0;
+	public int marshmallowsDestroyed;
 
 	public int level = 1;
 
@@ -37,6 +37,8 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	private IEnumerator coroutine;
 
+	private IEnumerator messageCoroutine;
+
 	GameObject levelUI;
 
 	GameObject gameUI;
@@ -50,7 +52,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		marshmallowsDestroyed = 0;
 		timer = FindObjectOfType<Timer>();
 		spawnTimer = spawnDuration;
 
@@ -67,6 +69,8 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		coroutine = LevelLoader();
 		StartCoroutine(coroutine);
+
+		messageCoroutine = ShowMessage();
 
 		levelUI = GameObject.FindGameObjectWithTag("LevelUI");
 		levelUI.SetActive(false);
@@ -115,7 +119,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 			bulletSpawner.shootingCooldown = 0.5f;
 		}
 
-		print("marshmallow hits: " + marshmallowHits);
+		print("marshmallows destroyed: " + marshmallowsDestroyed);
 		// print("max marshmallows: " + maxMarshmallows);
 
 	}
@@ -151,24 +155,26 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 	private IEnumerator ShowMessage () {
 
-			if(levelComplete) {
+		if(levelComplete) {
 
-				print("level complete: " + levelComplete);
-				ResetLevel();
-			
-				levelUI.SetActive(true);
-				gameUI.SetActive(false);
+			print("level complete: " + levelComplete);
+			ResetLevel();
+		
+			levelUI.SetActive(true);
+			gameUI.SetActive(false);
 
-				yield return new WaitForSeconds(10f);
+			yield return new WaitForSeconds(10f);
+		
+			StartNextLevel();
 			
-				StartNextLevel();
-				
-			}
+		}
 			
 		
  	}
 
 	public void StartNextLevel() {
+		// print("start level");
+		StopAllCoroutines();
 		levelUI.SetActive(false);
 		gameUI.SetActive(true);
 
@@ -178,7 +184,6 @@ public class MarshMallowEmitter : MonoBehaviour {
 	}
 
 	private void ResetLevel() {
-		print("reset level called: " + level);
 		levelComplete = false;
 
 		timer.timer = 10;
@@ -194,7 +199,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 		marshmallowHits = 0;
 		maxLoops = BASE_LOOP + level;
 		damageKeeper.damage = 100;
-		}
+	}
 
 	void SpawnMarshmallows() {
 
