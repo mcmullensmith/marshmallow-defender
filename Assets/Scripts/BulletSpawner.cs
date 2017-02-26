@@ -29,6 +29,7 @@ public class BulletSpawner : MonoBehaviour {
 	
 		RaycastHit hit;
 
+		
 		if (Physics.Raycast(gameCamera.transform.position, gameCamera.transform.forward, out hit)) {
 
 			if (hit.transform.GetComponent<Marshmallow> () != null && shootingTimer <= 0f) {
@@ -40,7 +41,9 @@ public class BulletSpawner : MonoBehaviour {
 
 				Projectile bullet = bulletObject.GetComponent<Projectile> ();
 				bullet.direction = transform.forward;
+				
 				bullet.speed = bulletSpeed;
+				bullet.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward, Camera.main.transform.up);
 
 				SoundManager.Instance.PlayOneShot(SoundManager.Instance.gunFire);
 
