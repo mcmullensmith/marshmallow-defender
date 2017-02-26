@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Marshmallow : MonoBehaviour {
 
+	public int currentHealth = 1;
 	public bool isAlive = true;
 	public GameObject explosion;
 
@@ -35,14 +36,32 @@ public class Marshmallow : MonoBehaviour {
 	}
 
 	void Explode() {
-        Instantiate(explosion, transform.position, transform.rotation);
+        GameObject clone = (GameObject)Instantiate(explosion, transform.position, transform.rotation);
 		SoundManager.Instance.PlayOneShot(SoundManager.Instance.marshmallowExplosion);
+		Destroy(clone, 3);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
+	
 	}
+
+	public void Damage(int damageAmount)
+    {
+        //subtract damage amount when Damage function is called
+        currentHealth -= damageAmount;
+
+        //Check if health has fallen below zero
+        if (currentHealth <= 0) 
+        {
+            //if health has fallen below zero, deactivate it 
+            ScoreKeeper scoreKeeper = FindObjectOfType<ScoreKeeper>();
+			scoreKeeper.IncrementScore(scorePerHit);
+			Die ();
+			marshmallowEmitter.marshmallowHits++;
+			marshmallowEmitter.marshmallowsDestroyed++;
+        }
+    }
 
 	void OnCollisionEnter(Collision collision) {
 		if (isAlive) {
