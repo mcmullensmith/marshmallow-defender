@@ -21,7 +21,7 @@ public class RaycastShoot : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		laserLine = GetComponent<LineRenderer>();
-		laserLine.numPositions = 2;
+		laserLine.positionCount = 2;
 		laserLine.startWidth = 0.25f;
 		laserLine.endWidth = 0.25f;
 		fpsCam = GetComponentInParent<Camera>();

@@ -115,6 +115,11 @@ public class MarshMallowEmitter : MonoBehaviour {
 			marshmallow.verticalForce = 350;
 			horizontalArea = 12;
 			spawnDuration = 2.0f;
+		} else if (level > 15) {
+			bulletSpawner.shootingCooldown = 0.2f;
+			marshmallow.verticalForce = 400;
+			horizontalArea = 13;
+			spawnDuration = 1.75f;
 		} else {
 			bulletSpawner.shootingCooldown = 0.5f;
 		}
