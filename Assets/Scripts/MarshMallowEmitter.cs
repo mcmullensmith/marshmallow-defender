@@ -146,7 +146,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 
 		}
 		
-		yield return new WaitForSeconds (10f);
+		yield return new WaitForSeconds (5f);
 		
 
 		if ( marshmallowHits == maxMarshmallows && isGameOver == false ) {
@@ -168,7 +168,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 			levelUI.SetActive(true);
 			gameUI.SetActive(false);
 
-			yield return new WaitForSeconds(10f);
+			yield return new WaitForSeconds(5f);
 		
 			StartNextLevel();
 			
@@ -191,7 +191,7 @@ public class MarshMallowEmitter : MonoBehaviour {
 	private void ResetLevel() {
 		levelComplete = false;
 
-		timer.timer = 10;
+		timer.timer = 5;
 
 		GameObject[] clones = GameObject.FindGameObjectsWithTag("Marshmallow");
 			

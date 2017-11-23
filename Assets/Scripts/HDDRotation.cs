@@ -5,14 +5,15 @@ using UnityEngine;
 public class HDDRotation : MonoBehaviour {
 
 	// Use this for initialization
+	public new Camera camera;
 	void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		var camera = transform.parent.GetComponent<Camera>();
-        var projectedLookDirection = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.down);
+		// var camera = transform.parent.GetComponent<Camera>();
+        var projectedLookDirection = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.zero);
         transform.rotation = Quaternion.LookRotation(projectedLookDirection);
 	}
 }
