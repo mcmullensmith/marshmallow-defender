@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 82fe4012624b64098ae560d6a594969d
+timeCreated: 1511195707
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Pleasantly Plump
+  fontNames:
+  - Pleasantly Plump
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
